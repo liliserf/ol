@@ -41,7 +41,6 @@ class Api::BusinessesController < ApplicationController
   # Serializes collection of businesses with proper attribute
   # in order to serialize and maintain root
   def serialized_businesses
-    byebug
     ActiveModel::Serializer::CollectionSerializer.new(@businesses)
   end
 end
