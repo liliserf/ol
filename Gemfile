@@ -24,10 +24,14 @@ group :development, :test do
   gem 'byebug'
   # Rails support for rspec (testing library)
   gem 'rspec-rails'
+  # FactoryGirl allows generating fake ActiveRecords for tests
   gem 'factory_girl_rails'
+  # generates fake data for common attribute type for factory_girl
+  # used in DB seeds
   gem 'faker'
-  gem 'active_model_serializers'
+  # pagination
   gem 'kaminari'
+  # ensures database is clean before suite runs so that failing, interrupted test data from last run is cleaned up
   gem 'database_cleaner'
 end
 
@@ -39,5 +43,6 @@ end
 group :test do  
   # Provides tools for testing ActiveModel classes
   gem 'rspec-activemodel-mocks'
+  # Shoulda-matchers provide RSpec-compatible one-liners for common Rails functionality.
   gem 'shoulda-matchers'
 end

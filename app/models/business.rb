@@ -1,9 +1,4 @@
-class Business < ActiveRecord::Base
+require 'csv'
 
-  validates_uniqueness_of :name
-  validates_uniqueness_of :address
-  validates_uniqueness_of :phone
-  validates_uniqueness_of :website
-  validates_uniqueness_of :uuid
-  
+class Business < ActiveRecord::Base
 end
