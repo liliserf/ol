@@ -12,26 +12,18 @@ Uses Ruby 2.3.1, Rails 4.2.6, Postgresql 9.5.3 as database and kaminari gem for 
  2. Start the rails server with `rails s` from the terminal
 
 ## Importing
-**NOTE: If using zsh, the rake task may not recognize the parameter. If a zsh error occurs, follow the instructions on this blog: http://mikeballou.com/blog/2011/07/18/zsh-and-rake-parameters/**
 
 - To import the original CSV file provided, run in the command line: 
 ```
 rake import:businesses["engineering_project_businesses.csv"]
 ```
-- To import the original file directly from the gzip link, run:
-```
-rake import:businesses["https://s3.amazonaws.com/ownlocal-engineering/engineering_project_businesses.csv.gz"]
-```
 - To import a new CSV file, save the file to the root folder and use the file name as the rake task argument:
 ```
 rake import:businesses["new_file.csv"]
 ```
-- To import a new gzip url, use the url as the rake task argument: 
-```
-rake import:businesses["new_gzip.csv.gz"]
-```
- 
  *Duplicate records will not be added to the database.*
+ 
+ **NOTE: If using zsh, the rake task may not recognize the parameter. If a zsh error occurs, follow the instructions on this blog: http://mikeballou.com/blog/2011/07/18/zsh-and-rake-parameters/**
 
 ## Endpoints
 
