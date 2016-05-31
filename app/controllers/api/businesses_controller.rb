@@ -1,21 +1,27 @@
 class Api::BusinessesController < ApplicationController
 
+  # Paginated collection of businesses in 50 record batches
+  # If page number is valid, renders business records and meta data
+  # Otherwise, renders error and code 404
   def index
     @businesses = Business.page(business_params[:page])
 
     if business_params[:page].to_i <= @businesses.total_pages.to_i
-      render json: { businesses: @businesses, 
+      render json: { businesses: serialized_businesses, 
                    meta: { pagination: { 
                             per_page: Business.default_per_page, 
                             total_pages: @businesses.total_pages, 
                             total_businesses: @businesses.total_count,
                             current_page: @businesses.current_page } } }, 
-             status: 200 
+             status: 200
     else
       render json: { errors: t("api.errors.pagination.pagination_exceeded") }, status: 404
     end
   end
 
+  # Serialized record of individual business
+  # If business exists with requested id, renders business record
+  # Otherwise renders error and code 404
   def show
     @business = Business.find_by(id: business_params[:id])
     if @business
@@ -27,7 +33,15 @@ class Api::BusinessesController < ApplicationController
 
   private
 
+  # Permitted params for business GET requests
   def business_params
     params.permit(:id, :page)
+  end
+
+  # Serializes collection of businesses with proper attribute
+  # in order to serialize and maintain root
+  def serialized_businesses
+    byebug
+    ActiveModel::Serializer::CollectionSerializer.new(@businesses)
   end
 end

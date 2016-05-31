@@ -29,6 +29,8 @@ group :development, :test do
   # generates fake data for common attribute type for factory_girl
   # used in DB seeds
   gem 'faker'
+  # Serializers
+  gem 'active_model_serializers'
   # pagination
   gem 'kaminari'
   # ensures database is clean before suite runs so that failing, interrupted test data from last run is cleaned up

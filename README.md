@@ -61,8 +61,7 @@ curl -H "Accept: application/json" "http://localhost:3000/api/businesses/1"
   "country": "US",
   "phone": "2462288476",
   "website": "http://bergstrom.org/",
-  "created_at": "2013-11-19T23:26:13.000Z",
-  "updated_at": "2016-05-30T18:11:06.405Z"
+  "created_at": "2013-11-19T23:26:13.000Z"
 }
 ```
 *If the id does not exist in the database, the response will include an error message and `404` code.*
@@ -102,8 +101,7 @@ curl -H "Accept: application/json" "http://localhost:3000/api/businesses?page=2"
       "country": "US",
       "phone": "5932720216",
       "website": "http://www.carroll.com/",
-      "created_at": "2016-03-05T08:45:00.000Z",
-      "updated_at": "2016-05-30T18:11:06.736Z"
+      "created_at": "2016-03-05T08:45:00.000Z"
     }, ...],
   "meta": {
     "pagination": {
