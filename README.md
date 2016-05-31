@@ -1,17 +1,22 @@
 # OL API
 
 ## Installation 
-Uses Ruby 2.3.1 and Rails 4.2.6
+Uses Ruby 2.3.1, Rails 4.2.6, and Postgresql 9.5.3
  1. Install Postgres via homebrew `brew install postgres`
- 2. git clone project `git clone git@ithub.com:liliserf/ol.git`
+ 2. git clone project `git clone git@github.com:liliserf/ol.git`
  3. cd into project `cd ol`
  4. run `bundle install`
 
 ## Setup
  1. Run `rake db:setup`
- 2. To import the original business file CSV run `rake import:businesses["engineering_project_businesses.csv"]` or to import businesses directly from the gzip link, run command `rake import:businesses[https://s3.amazonaws.com/ownlocal-engineering/engineering_project_businesses.csv.gz]`
- *Any CSV file saved to the root folder or gzip url can be imported by using the file or url name as the rake task argument.* 
- 3. Start the rails server with `rails s` from the terminal
+ 2. Start the rails server with `rails s` from the terminal
+
+## Importing
+ - To import the original CSV file, run `rake import:businesses["engineering_project_businesses.csv"]`
+  - To import a new CSV file, save the file to the root folder and use the file name as the rake task argument such as `rake import:businesses['new_file.csv']`
+ - To import the original file directly from the gzip link, run command `rake import:businesses["https://s3.amazonaws.com/ownlocal-engineering/engineering_project_businesses.csv.gz"]`
+  - To import a gzip url, use the url as the rake task argument such as `rake import:businesses["new_gzip.csv.gz"]`
+ *Duplicate files will not be added to the database.*
 
 ## Endpoints
 
@@ -47,6 +52,7 @@ curl -H "Accept: application/json" "http://localhost:3000/api/businesses/1"
   "updated_at": "2016-05-30T18:11:06.405Z"
 }
 ```
+*If the id does not exist in the database, the response will include an error message and `404` code.*
 
 ### INDEX
 
@@ -54,7 +60,7 @@ Name | Method | Parameter | Description
 --- | --- | --- | ---
 /api/businesses?page=  | GET | page | Request batches of business records with pagination.
 
-- Requests return JSON with 50 business records per page as well as pagination meta data including `total_businesses`, `total_pages` and `current_page`.
+- Requests return JSON with 50 business records per page as well as pagination meta data including `per_page`, `total_businesses`, `total_pages` and `current_page`.
 - Without a page param, request defaults to page 1.
 
 #### Sample request:
@@ -95,4 +101,8 @@ curl -H "Accept: application/json" "http://localhost:3000/api/businesses?page=2"
   }
 }
 ```
+*If the page parameter exceeds the total number of pages, the response will include an error message and `404` code.*
+
+### Testing
+The tests are written using RSpec. To run the test suite, call `bundle exec rspec` from the command line.
 
