@@ -6,9 +6,28 @@ RSpec.describe Api::BusinessesController, type: :controller do
       allow(Business).to receive(:default_per_page).and_return(1)
       FactoryGirl.create_list :business, Business.default_per_page + 1
     end
+
+    # context "authorized request" do
+    #   request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("test_access1")
+
+    # end
+
+    # context "unauthorized request" do
+    #   it "returns a 401 error and message if token is not provided" do
+    #     request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("test_access1")
+
+    #   end
+
+    #   it "returns a 403 error and message if token is incorrect" do
+    #     get :index, { page: 6 }
+    #     expect(json["errors"]).to eq "Requested page exceeds record pagination."
+    #     expect(response.status).to eq(404)
+    #   end
+    # end
     
     context "paginates records" do
       it "returns first page of business records by default" do
+        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("test_access1")
         get :index
         expect(json["meta"]["pagination"]["current_page"]).to eq(1)
         expect(response.status).to eq(200)
@@ -38,6 +57,11 @@ RSpec.describe Api::BusinessesController, type: :controller do
   describe "GET #show" do
     before(:each) do
       @business = FactoryGirl.create :business
+    end
+
+    context "unauthorized request" do
+      it "returns a 401 error and message if user is unauthorized" do
+      end
     end
 
     it "returns the right object" do

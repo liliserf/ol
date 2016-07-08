@@ -1,4 +1,5 @@
 class Api::BusinessesController < ApplicationController
+  before_filter :restrict_access
 
   # Paginated collection of businesses in 50 record batches
   # If page number is valid, renders business records and meta data
@@ -42,5 +43,11 @@ class Api::BusinessesController < ApplicationController
   # in order to serialize and maintain root
   def serialized_businesses
     ActiveModel::Serializer::CollectionSerializer.new(@businesses)
+  end
+
+  def restrict_access
+    authenticate_or_request_with_http_token do |token, options|
+      ApiKey.exists?(access_token: token)
+    end
   end
 end

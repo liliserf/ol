@@ -6,6 +6,11 @@ describe "Business API" do
     FactoryGirl.create_list(:business, Business.default_per_page + 1)
   end
 
+  context "unauthorized request" do
+      it "returns a 401 error and message if request is unauthorized" do
+      end
+  end
+
   it "paginates lists of more than 50 businesses" do
     get '/api/businesses?page=2'
 
