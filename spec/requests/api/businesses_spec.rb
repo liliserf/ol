@@ -7,22 +7,34 @@ describe "Business API" do
   end
 
   context "unauthorized request" do
-      it "returns a 401 error and message if request is unauthorized" do
-      end
+    it "returns a 401 error and message if token is incorrect" do
+      get '/api/businesses?page=2', nil, {"HTTP_AUTHORIZATION" => "Token token=bad_token"}
+      expect(response).to_not be_success
+    end
+
+    it "returns a 401 error and message if token is not provided" do
+      get '/api/businesses?page=2', nil, {"HTTP_AUTHORIZATION" => "Token token="}
+      expect(response).to_not be_success
+    end
   end
 
-  it "paginates lists of more than 50 businesses" do
-    get '/api/businesses?page=2'
+  context "authorized request" do
+    let!(:token) do
+      ApiKey.create.access_token
+    end
 
-    expect(response).to be_success
-    expect(json['businesses'].length).to eq(1)
-  end
+    it "paginates lists of more than 50 businesses" do
+      get '/api/businesses?page=2', nil, {"HTTP_AUTHORIZATION" => "Token token=#{token}"}
+      expect(response).to be_success
+      expect(json['businesses'].length).to eq(1)
+    end
 
-  it "retrieves a specific business by id" do
-    biz = Business.last
-    get "/api/businesses/#{biz.id}"
-    
-    expect(response).to be_success
-    expect(json['id']).to eq(biz.id)
+    it "retrieves a specific business by id" do
+      biz = Business.last
+      get "/api/businesses/#{biz.id}", nil, {"HTTP_AUTHORIZATION" => "Token token=#{token}"}
+      
+      expect(response).to be_success
+      expect(json['id']).to eq(biz.id)
+    end
   end
 end
