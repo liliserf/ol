@@ -35,8 +35,6 @@ Name | Method | Description
 
 #### Sample request:
 ```shell
-# Browser
-http://localhost:3000/api/businesses/1
 
 # Command Line
 curl -H "Accept: application/json" -H 'Authorization: Token token="[my_super_secret_token]"' "http://localhost:3000/api/businesses/1"
@@ -73,8 +71,6 @@ Name | Method | Parameter | Description
 
 #### Sample request:
 ```shell
-# Browser
-http://localhost:3000/api/businesses?page=2
 
 # Command Line
 curl -H "Accept: application/json" -H 'Authorization: Token token="[my_super_secret_token]"' "http://localhost:3000/api/businesses?page=2"
