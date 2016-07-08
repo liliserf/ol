@@ -10,6 +10,7 @@ Uses Ruby 2.3.1, Rails 4.2.6, Postgresql 9.5.3 as database and kaminari gem for 
 ## Setup
  1. Run `rake db:setup`
  2. Start the rails server with `rails s` from the terminal
+ 3. Generate an API key for yourself using `ApiKey.create.access_token` to authorize your calls. Keep it in a safe place!
 
 ## Importing
 
@@ -38,7 +39,7 @@ Name | Method | Description
 http://localhost:3000/api/businesses/1
 
 # Command Line
-curl -H "Accept: application/json" "http://localhost:3000/api/businesses/1"
+curl -H "Accept: application/json" -H 'Authorization: Token token="[my_super_secret_token]"' "http://localhost:3000/api/businesses/1"
 ```
 
 #### Sample response:
@@ -76,7 +77,7 @@ Name | Method | Parameter | Description
 http://localhost:3000/api/businesses?page=2
 
 # Command Line
-curl -H "Accept: application/json" "http://localhost:3000/api/businesses?page=2"
+curl -H "Accept: application/json" -H 'Authorization: Token token="[my_super_secret_token]"' "http://localhost:3000/api/businesses?page=2"
 ```
 
 #### Sample response:
